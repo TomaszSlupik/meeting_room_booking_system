@@ -1,13 +1,9 @@
-import Test from "./components/test";
+import Login from './components/Login/Login';
 
-export default function Home() {
-  return (
-    <div>
-      <main>
-            <Test />
-      </main>
-      <footer>
-      </footer>
-    </div>
-  );
-}
+export default function LoginPage() {
+    return (
+      <div>
+        <Login />
+      </div>
+    );
+  }

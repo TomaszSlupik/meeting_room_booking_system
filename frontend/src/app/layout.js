@@ -7,7 +7,7 @@ import { store } from '../app/redux/store/index';
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="pl">
       <body>
         <Provider store={store}>
           {children}

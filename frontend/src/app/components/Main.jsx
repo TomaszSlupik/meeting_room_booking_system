@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useDispatch } from "react-redux";
 import { setRooms } from "../redux/actions/roomActions";
 
-export default function Test() {
+export default function Main() {
  
   const dispatch = useDispatch();
 
