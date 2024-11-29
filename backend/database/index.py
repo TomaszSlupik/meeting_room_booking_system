@@ -1,7 +1,17 @@
+import psycopg2
 from config.config import config
 
-config_values = config
-
-user_pg = config_values["DB_USER"]
-pass_pg = config_values["DB_PASSWORD"]
-serv_pg = config_values["DB_HOST"]
+def connect_to_database():
+    config_values = config() 
+    try:
+        conn = psycopg2.connect(
+            dbname=config_values["DB_DATABASE"],
+            user=config_values["DB_USER"],
+            password=config_values["DB_PASSWORD"],
+            host=config_values["DB_HOST"]
+        )
+        print("Połączono z bazą danych.")
+        return conn
+    except Exception as e:
+        print(f"Błąd połączenia z bazą danych: {e}")
+        return None
