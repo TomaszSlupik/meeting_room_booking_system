@@ -8,6 +8,7 @@ import './User.css';
 import LoadingDate from '../LoadingDate/LoadingDate';
 import { checkTokenUser } from '@/app/utils/auth';
 import {formatDate } from '@/app/utils/formatDate';
+import {formatDateInput} from '@/app/utils/formatDateInput';
 import { fetchReservation } from '@/app/api/reservationService';
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -17,6 +18,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
 import Slide from "@mui/material/Slide";
 import { deleteRoomDatabase } from '@/app/api/deleteReservationService';
+import { editRoomDatabase } from '@/app/api/editReservationService';
 import Stack from "@mui/material/Stack";
 import IconButton from "@mui/material/IconButton";
 import MuiAlert from "@mui/material/Alert";
@@ -26,6 +28,7 @@ import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import TextField from "@mui/material/TextField";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
+import theme from '@/app/theme/theme';
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -54,6 +57,17 @@ export default function User() {
   const [hourRomm, setHourRoomDelete] = useState()
   const [message, setMessage] = useState('');
   const [showAlert, setShowAlert] = useState(false);
+
+  // Edycja zarezerwowanej sali 
+  const [openWindowToEdit, setOpenWindowToEdit] = useState(false);
+  const [editRoomId, setEditRoomId] = useState("");
+  const [editReservationDate, setEditReservationDate] = useState("");
+  const [oldReservationDate, setOldReservationDate] = useState("")
+  const [editHour, setEditHour] = useState("");
+  const [oldHour, setOldHour] = useState("");
+  const [editNameRoom, setEditNameRoom] = useState("")
+
+
 
   // Eksport:
   const [openExport, setOpenExport] = useState(false);
@@ -185,6 +199,26 @@ export default function User() {
         setOpenWindowToDelete(false);
   }
 
+  // Edycja 
+  const handleEditClose = () => {
+    setOpenWindowToEdit(false);
+  };
+
+  const handleEditOpen = (id_room, reservation_date, reservation_time, name_room, room) => {
+    setEditRoomId(room)
+    setEditReservationDate(formatDateInput(reservation_date))
+    setOldReservationDate(formatDateInput(reservation_date))
+    setEditHour(reservation_time)
+    setOldHour(reservation_time)
+    setEditNameRoom(name_room)
+    setOpenWindowToEdit(true);
+  };
+
+  const handleAcceptEdit = () => {
+    setOpenWindowToEdit(false);
+    editRoomDatabase(editRoomId, editReservationDate, editHour, setMessage, setShowAlert, oldHour, oldReservationDate, roomsRedux);
+  };
+
   // Eksport do excela
   const handleClickOpenExport = () => {
     setOpenExport(true);
@@ -298,17 +332,42 @@ export default function User() {
                     className='button_edit'
                     style={{
                       color: "#ffba00",
+                      border: '2px solid #ffba00',  
+                      backgroundColor: "transparent",  
+                      transition: "background-color 0.3s ease, color 0.3s ease", 
                     }}
+                    onMouseEnter={(e) => {
+                      e.target.style.backgroundColor = "#ffba00"; 
+                      e.target.style.color = "#000"; 
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.backgroundColor = "transparent"; 
+                      e.target.style.color = "#ffba00"; 
+                    }}
+                    onClick={() =>
+                      handleEditOpen(el.id_room, el.reservation_date, el.reservation_time, el.name_room,el.room)
+                    }
                   >
                     Edytuj
                   </Mybutton>
                 </td>
                 <td style={{ textAlign: "center", maxWidth: "150px" }}>
                   <Mybutton
-                   className='button_delete'
-                    style={{
-                      color: "red",
-                    }}
+                      className="button_delete"
+                      style={{
+                        color: "red",  
+                        border: '2px solid red',
+                        backgroundColor: "transparent", 
+                        transition: "background-color 0.3s ease, color 0.3s ease", 
+                      }}
+                      onMouseEnter={(e) => {
+                        e.target.style.backgroundColor = "#ff0000"; 
+                        e.target.style.color = "#fff"; 
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.backgroundColor = "transparent"; 
+                        e.target.style.color = "red"; 
+                      }}
                     onClick={() =>
                       handleClickOpenDelete(el.id_room, el.name_room, el.reservation_time)
                     }
@@ -344,28 +403,122 @@ export default function User() {
                     </DialogContentText>
                   </DialogContent>
                   <DialogActions>
-                    <Button
-                      variant="outlined"
+                    <Mybutton
                       style={{
-                        color: 'black'
+                        color: "red",  
+                        border: '2px solid red',
+                        backgroundColor: "transparent", 
+                        transition: "background-color 0.3s ease, color 0.3s ease", 
+                      }}
+                      onMouseEnter={(e) => {
+                        e.target.style.backgroundColor = "#ff0000"; 
+                        e.target.style.color = "#fff"; 
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.backgroundColor = "transparent"; 
+                        e.target.style.color = "red"; 
                       }}
                       onClick={handleCloseWindowDelete}
                     >
                       Anuluj
-                    </Button>
-                    <Button
+                    </Mybutton>
+                    <Mybutton
                       style={{
-                        color: 'black',
-                        backgroundColor: 'green'
+                        color: "green",  
+                        border: '2px solid green',
+                        backgroundColor: "transparent", 
+                        transition: "background-color 0.3s ease, color 0.3s ease", 
                       }}
-                      variant="contained"
+                      onMouseEnter={(e) => {
+                        e.target.style.backgroundColor = "green"; 
+                        e.target.style.color = "#fff"; 
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.backgroundColor = "transparent"; 
+                        e.target.style.color = "green"; 
+                      }}
                       onClick={() => handleAcceptDelete()}
                     >
                       Akceptuję
-                    </Button>
+                    </Mybutton>
                   </DialogActions>
                 </Dialog>
               </React.Fragment>
+
+                {/* Edycja okno */}
+                          <Dialog
+                open={openWindowToEdit}
+                TransitionComponent={Transition}
+                keepMounted
+                onClose={handleEditClose}
+                aria-describedby="alert-dialog-slide-description"
+              >
+                <DialogTitle>Edycja sali konferencyjnej: {editNameRoom}</DialogTitle>
+                <DialogContent>
+                <div id="alert-dialog-slide-description"
+                className='edit_form'
+                >
+                    <label 
+                    className='edit_label'
+                    htmlFor="date-input">Wybierz datę:</label>
+                    <input
+                      type="date"
+                      id="date-input"
+                      value={editReservationDate}
+                      onChange={(e) => setEditReservationDate(e.target.value)}
+                    />
+
+                    <label 
+                    className='edit_label'
+                    htmlFor="time-input">Wybierz godzinę:</label>
+                    <input
+                      type="time"
+                      id="time-input"
+                      value={editHour}
+                      onChange={(e) => setEditHour(e.target.value)}
+                    />
+                  </div>
+                </DialogContent>
+                <DialogActions>
+                  <Mybutton 
+                      style={{
+                        color: "red",  
+                        border: '2px solid red',
+                        backgroundColor: "transparent", 
+                        transition: "background-color 0.3s ease, color 0.3s ease", 
+                      }}
+                      onMouseEnter={(e) => {
+                        e.target.style.backgroundColor = "#ff0000"; 
+                        e.target.style.color = "#fff"; 
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.backgroundColor = "transparent"; 
+                        e.target.style.color = "red"; 
+                      }}
+                  onClick={handleEditClose}>
+                    Anuluj
+                  </Mybutton>
+                  <Mybutton 
+            style={{
+              color: "green",  
+              border: '2px solid green',
+              backgroundColor: "transparent", 
+              transition: "background-color 0.3s ease, color 0.3s ease", 
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.backgroundColor = "green"; 
+              e.target.style.color = "#fff"; 
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.backgroundColor = "transparent"; 
+              e.target.style.color = "green"; 
+            }}
+
+                  onClick={handleAcceptEdit}>
+                    Akceptuję
+                  </Mybutton>
+                </DialogActions>
+              </Dialog>
 
             {/* Eksport do exela */}
             <React.Fragment>
@@ -402,12 +555,42 @@ export default function User() {
                     </div>
                   </DialogContent>
                   <DialogActions>
-                    <Button variant="outlined" onClick={handleCloseExport}>
+                  <Mybutton 
+                      style={{
+                        color: "red",  
+                        border: '2px solid red',
+                        backgroundColor: "transparent", 
+                        transition: "background-color 0.3s ease, color 0.3s ease", 
+                      }}
+                      onMouseEnter={(e) => {
+                        e.target.style.backgroundColor = "#ff0000"; 
+                        e.target.style.color = "#fff"; 
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.backgroundColor = "transparent"; 
+                        e.target.style.color = "red"; 
+                      }}
+                    onClick={handleCloseExport}>
                       Anuluj
-                    </Button>
-                    <Button variant="contained" onClick={handleExport}>
+                    </Mybutton>
+                    <Mybutton 
+            style={{
+              color: "green",  
+              border: '2px solid green',
+              backgroundColor: "transparent", 
+              transition: "background-color 0.3s ease, color 0.3s ease", 
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.backgroundColor = "green"; 
+              e.target.style.color = "#fff"; 
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.backgroundColor = "transparent"; 
+              e.target.style.color = "green"; 
+            }}
+                    onClick={handleExport}>
                       Akceptuję
-                    </Button>
+                    </Mybutton>
                   </DialogActions>
                 </Dialog>
               </React.Fragment>

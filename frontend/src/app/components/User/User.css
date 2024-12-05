@@ -89,6 +89,17 @@
   background-color: var(--button-delete);
 }
 
+.edit_form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.edit_label {
+  color: var(--primary-color);
+}
+
 
 @media (min-width: 567px) {
   .table_room {
