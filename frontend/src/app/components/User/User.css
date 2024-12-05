@@ -1,0 +1,115 @@
+:root {
+  --primary-color: #00695c;
+  --highlight-color: #ffba00;
+  --button-edit: #ffba00;
+  --button-delete: red;
+  --button-hover-color: #004d40;
+  --table-header-bg: #004d40;
+}
+
+.wrapper {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  color: #fff;
+}
+
+.table_room {
+  width: 95%;
+  border-collapse: collapse;
+  max-height: 400px;
+  display: block;
+  overflow: auto;
+  border: 1px solid #444;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background: #1e1e1e;
+}
+
+.table_room thead, .table_room caption {
+  position: sticky;
+  width: 100%;
+  top: 0;
+  z-index: 2;
+  background: var(--table-header-bg);
+  font-size: 14px;
+  color: #fff;
+}
+
+.table_header {
+  font-weight: 500;
+  text-transform: uppercase;
+  padding: 12px;
+}
+
+.table_thead th {
+  color: white;
+  padding: 15px;
+  border: 1px solid #444;
+  font-weight: 500;
+}
+
+.table_value tr td {
+  width: 100%;
+  border: 1px solid #444;
+  padding: 12px;
+  font-size: 14px;
+  color: #ccc;
+  text-align: center;
+  transition: background-color 0.2s ease;
+}
+
+.table_value tr:hover td {
+  background-color: #333;
+}
+
+.table_room::-webkit-scrollbar {
+  width: 12px;
+}
+
+.table_room::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 10px;
+}
+
+.table_room::-webkit-scrollbar-track {
+  background: #444;
+}
+
+
+.button_edit:hover {
+  background-color: var(--button-edit);
+}
+
+.button_delete:hover {
+  background-color: var(--button-delete);
+}
+
+
+@media (min-width: 567px) {
+  .table_room {
+    width: 80%;
+  }
+}
+
+@media (min-width: 762px) {
+  .table_room {
+    width: 75%;
+  }
+}
+
+@media (min-width: 992px) {
+  .table_room {
+    width: 70%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .table_room {
+    width: 50%;
+  }
+}
