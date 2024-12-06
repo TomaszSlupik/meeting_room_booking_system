@@ -84,6 +84,43 @@ Frontend aplikacji został stworzony przy użyciu **Next.js**. Struktura folder�
 - **`/theme`**: Zawiera konfigurację motywu aplikacji dla **Material-UI** (createTheme).
 - **`/utils`**: Folder przechowujący funkcje pomocnicze, które są wykorzystywane w różnych częściach aplikacji.
 
+## Instalacja
+
+### Aby pobrać repozytorium:
+
+```bash
+  git clone https://github.com/TomaszSlupik/meeting_room_booking_system.git
+```
+
+### Uruchomienie Next.js:
+
+```bash
+  cd frontend
+```
+
+```bash
+  npm install
+```
+
+```bash
+  npm run dev
+```
+
+
+### Uruchomienie Flask:
+
+```bash
+  cd backend
+```
+
+```bash
+  pip install -r requirements.txt
+```
+
+```bash
+  python app.py
+```
+
 ## Developer
 
 - Tomasz Słupik
