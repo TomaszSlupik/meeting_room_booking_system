@@ -22,8 +22,11 @@ def login():
 
     # Token JWT
     access_token = create_access_token(identity=username)
+
+    # Id użytkownika:
+    user_id = user[0]
     
     cursor.close()
     conn.close()
 
-    return jsonify(access_token=access_token), 200
+    return jsonify(access_token=access_token, user_id=user_id), 200

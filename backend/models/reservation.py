@@ -7,13 +7,16 @@ def get_reservation():
     cursor = conn.cursor()
 
     cursor.execute("""
-    SELECT 
+ SELECT 
+        u.id,
         u.username,
         ro.name_room,
         ro.description,
         r.reservation_date,   
         r.reservation_time,  
-        r.created_at
+        r.created_at,
+		r.id as id_room,
+        ro.id as room
     FROM 
         reservation AS r
     JOIN 
@@ -27,12 +30,15 @@ def get_reservation():
     result = []
     for room in rooms:
         result.append({
-            "username": room[0],  
-            "name_room": room[1],
-            "description": room[2],
-            "reservation_date": room[3],
-            "reservation_time": room[4],
-            "created_at": room[5] 
+            "id": room[0],  
+            "username": room[1],  
+            "name_room": room[2],
+            "description": room[3],
+            "reservation_date": room[4],
+            "reservation_time": room[5],
+            "created_at": room[6],
+            "id_room": room[7],
+            "room": room[8]
         })
 
     cursor.close()
