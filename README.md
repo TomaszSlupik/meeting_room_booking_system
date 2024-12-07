@@ -88,10 +88,11 @@ Frontend aplikacji został stworzony przy użyciu **Next.js**. Struktura folder�
 
 ## Screenshots
 
-### Mobilna wersja
+### Mobilna wersja - główny panel
 ![Mobilna wersja](frontend/public/assets/mobile_main.JPG)
 
-
+### Desktopowa wersja - główny panel
+![Desktop wersja](frontend/public/assets/desktop_main.JPG)
 
 ## Instalacja
 
