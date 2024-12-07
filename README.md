@@ -91,8 +91,12 @@ Frontend aplikacji został stworzony przy użyciu **Next.js**. Struktura folder�
 ### Mobilna wersja - główny panel
 ![Mobilna wersja](frontend/public/assets/mobile_main.JPG)
 
+![Mobilna wersja](frontend/public/assets/mobile_rezerwacja.JPG)
+
 ### Desktopowa wersja - główny panel
 ![Desktop wersja](frontend/public/assets/desktop_main.JPG)
+
+![Mobilna wersja](frontend/public/assets/desktop_rezerwacja.JPG)
 
 ## Instalacja
 
