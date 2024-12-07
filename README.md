@@ -76,13 +76,22 @@ Backend aplikacji został napisany w **Flask**. Struktura aplikacji jest następ
 Frontend aplikacji został stworzony przy użyciu **Next.js**. Struktura folderów w aplikacji `src/app` została zaprojektowana w sposób umożliwiający łatwą nawigację oraz organizację kodu. Poniżej znajduje się szczegółowy opis poszczególnych folderów:
 
 
+- **`/api`**: CRUD po stronie Frontendu.
 - **`/booking`**: Routing dla poszczególnych komponentów.
 - **`/components`**: Zawiera wielokrotnie wykorzystywane komponenty JSX, które stanowią podstawowe elementy interfejsu użytkownika. Folder ten obejmuje także style CSS powiązane z komponentami, np. przyciski, formularze, modale i inne elementy UI.
 - **`/fonts`**: Fonty.
 - **`/redux`**: Folder przechowujący logikę związaną z zarządzaniem stanem aplikacji za pomocą Redux. Zawiera pliki dotyczące akcji, reducerów i konfiguracji store'a, które umożliwiają centralne zarządzanie danymi w aplikacji.
 - **`/styles`**: Główne pliki CSS oraz style aplikacji, w tym style ogólne oraz specyficzne dla komponentów, takie jak style dla przycisków, nagłówków,
 - **`/theme`**: Zawiera konfigurację motywu aplikacji dla **Material-UI** (createTheme).
+- **`/ui`**: Alerty, które są wykorzystywane w wielu komponentach.
 - **`/utils`**: Folder przechowujący funkcje pomocnicze, które są wykorzystywane w różnych częściach aplikacji.
+
+## Screenshots
+
+### Mobilna wersja
+![Mobilna wersja](frontend/public/assets/mobile_main.JPG)
+
+
 
 ## Instalacja
 
