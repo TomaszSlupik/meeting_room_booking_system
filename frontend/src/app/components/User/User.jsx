@@ -19,16 +19,16 @@ import Button from "@mui/material/Button";
 import Slide from "@mui/material/Slide";
 import { deleteRoomDatabase } from '@/app/api/deleteReservationService';
 import { editRoomDatabase } from '@/app/api/editReservationService';
-import Stack from "@mui/material/Stack";
-import IconButton from "@mui/material/IconButton";
 import MuiAlert from "@mui/material/Alert";
-import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import TextField from "@mui/material/TextField";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
-import theme from '@/app/theme/theme';
+import AlertMessage from '@/app/ui/AlertMessage';
+import Mycard from '@/app/styles/mycard';
+
+
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -55,6 +55,8 @@ export default function User() {
   const [deleteRoom, setDeleteRoom] = useState();
   const [nameRomm, setNameRoomDelete] = useState()
   const [hourRomm, setHourRoomDelete] = useState()
+
+  // Alert
   const [message, setMessage] = useState('');
   const [showAlert, setShowAlert] = useState(false);
 
@@ -67,6 +69,7 @@ export default function User() {
   const [oldHour, setOldHour] = useState("");
   const [editNameRoom, setEditNameRoom] = useState("")
 
+  const today = new Date().toISOString().split('T')[0];
 
 
   // Eksport:
@@ -84,6 +87,11 @@ export default function User() {
   }, [dispatch]); 
 
 
+  // Sprawdzam czy jest to admin:
+  const userId = parseInt(localStorage.getItem('user_id'));
+  const role = roomsRedux.filter(room => room.id === userId).map(room => room.role)
+  const roleCheck = role[0]
+ 
   
   useEffect(() => {
  
@@ -215,13 +223,39 @@ export default function User() {
   };
 
   const handleAcceptEdit = () => {
-    setOpenWindowToEdit(false);
-    editRoomDatabase(editRoomId, editReservationDate, editHour, setMessage, setShowAlert, oldHour, oldReservationDate, roomsRedux);
+
+    const timeToMinutes = (time) => {
+      const [hours, minutes] = time.split(':').map(Number);
+      return hours * 60 + minutes;
+    };
+
+    const editTimeInMinutes = timeToMinutes(editHour);
+    const startLimit = timeToMinutes('08:00');
+    const endLimit = timeToMinutes('15:00');
+
+
+    if (editTimeInMinutes > endLimit || editTimeInMinutes < startLimit) {
+        setOpenWindowToEdit(false);
+        setMessage("Rezerwacje są dostępne w godzinach 08:00 - 15:00. Proszę wybrać odpowiednią godzinę.");
+        setShowAlert(true)
+      }
+      else {
+        console.log('OK', editTimeInMinutes)
+            setOpenWindowToEdit(false);
+             editRoomDatabase(editRoomId, editReservationDate, editHour, setMessage, setShowAlert, oldHour, oldReservationDate, roomsRedux);
+      }
+
   };
 
   // Eksport do excela
   const handleClickOpenExport = () => {
-    setOpenExport(true);
+    if (roleCheck === 'user') {
+      setMessage("Operację eksportu może wykonać tylko Administrator.")
+      setShowAlert(true)
+    }
+    else {
+      setOpenExport(true);
+    }
   };
 
   const handleCloseExport = () => {
@@ -270,43 +304,49 @@ export default function User() {
           Powrót
         </Mybutton>
       </Wrapperheader>
-        <div style={styles.searchContainer}>
-        <SearchIcon style={styles.icon} />
-          <input
-            type="text"
-            placeholder="Wyszukaj po Sali"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            style={styles.input}
-            onFocus={(e) => (e.target.style.borderColor = styles.inputFocus.borderColor)}
-            onBlur={(e) => (e.target.style.borderColor = "#00796b")}
-          />
 
-        </div>
+        <Mycard>
+          <div className="wrapper_info">
+                  <div className='info_user'>
+                  Wszystkie Twoje rezerwacje są teraz dostępne w jednym miejscu. Przeglądaj je, edytuj lub usuń w zależności od potrzeb
+                  </div>
+                  <div style={styles.searchContainer}>
+                <SearchIcon style={styles.icon} />
+                  <input
+                    type="text"
+                    placeholder="Wyszukaj po Sali"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    style={styles.input}
+                    onFocus={(e) => (e.target.style.borderColor = styles.inputFocus.borderColor)}
+                    onBlur={(e) => (e.target.style.borderColor = "#00796b")}
+                  />
 
-        <div>
-        <Button
-                    variant="contained"
-                    style={{
-                      backgroundColor: "#8e8d8b",
-                      color: "#fff",
-                      marginRight: "1em",
-                      height: "40px",
-                      width: "180px",
-                    }}
-                    onClick={handleClickOpenExport}
-                    startIcon={<FileDownloadIcon />}
-                  >
-                    Export Excel
-                  </Button>
-        </div>
+                </div>
 
-        <div>
-          Liczba Rezerwacji: 
-          {
-            counter
-          }
-        </div>
+                <div>
+                <Button
+                            variant="contained"
+                            style={{
+                              backgroundColor: "#8e8d8b",
+                              color: "#fff",
+                              height: "40px",
+                              width: "180px",
+                            }}
+                            onClick={handleClickOpenExport}
+                            startIcon={<FileDownloadIcon />}
+                          >
+                            Export Excel
+                          </Button>
+                </div>
+
+                <div className="counter_container">
+                  Liczba Rezerwacji: {counter}
+                </div>
+          </div>
+        </Mycard>
+      
+       
 
         <table className="table_room">
           <caption className="table_header">
@@ -466,6 +506,8 @@ export default function User() {
                       id="date-input"
                       value={editReservationDate}
                       onChange={(e) => setEditReservationDate(e.target.value)}
+                      min={today} 
+                      required
                     />
 
                     <label 
@@ -476,6 +518,9 @@ export default function User() {
                       id="time-input"
                       value={editHour}
                       onChange={(e) => setEditHour(e.target.value)}
+                      min="08:00" 
+                      max="15:00" 
+                      required
                     />
                   </div>
                 </DialogContent>
@@ -595,44 +640,11 @@ export default function User() {
                 </Dialog>
               </React.Fragment>
 
-            <Stack
-          style={{
-            position: "absolute",
-            bottom: "2%",
-            left: "2%",
-            maxHeight: "300px",
-            overflow: "scroll",
-          }}
-          spacing={2}
-          sx={{ width: "20%" }}
-        >
-          {showAlert && (
-            <Alert
-              variant="filled"
-              severity={
-                message === "Rekord został usunięty" ||
-                message === "Trwa dodawanie wielu rekordów, poczekaj"
-                  ? "success"
-                  : message === "Trwa usuwanie wielu rekordów, poczekaj" ||
-                  message === "Trwa usuwanie rekordu, poczekaj"
-                    ? "error"
-                    : "warning"
-              }
-              action={
-                <IconButton
-                  aria-label="close"
-                  color="inherit"
-                  onClick={() => setShowAlert(false)}
-                >
-                  <CloseIcon />
-                  
-                </IconButton>
-              }
-            >
-              {message}
-            </Alert>
-          )}
-        </Stack>  
+              <AlertMessage 
+        showAlert={showAlert} 
+        message={message} 
+        setShowAlert={setShowAlert} 
+      />
     </div>
   );
 }
