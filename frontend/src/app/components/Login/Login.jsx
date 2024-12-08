@@ -2,14 +2,18 @@
 import React, { useState } from 'react';
 import './Login.css';
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 import axios from 'axios'
+import Mybutton from '@/app/styles/mybutton';
+import AlertMessage from '@/app/ui/AlertMessage';
 
 export default function Login() {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+
+  // Alert
+  const [message, setMessage] = useState('');
+  const [showAlert, setShowAlert] = useState(false);
 
   const handleLogin = async () => {
     try {
@@ -17,13 +21,16 @@ export default function Login() {
         username,
         password,
       });
-      const { access_token } = response.data;
+      const { access_token, user_id } = response.data;
       localStorage.setItem('token', access_token);  
+
+      localStorage.setItem('user_id', user_id);
 
 
       window.location.href = '/booking/main';
     } catch (err) {
-      setError('Błąd logowania: Sprawdź dane logowania');
+      setMessage("Błąd logowania: Sprawdź dane logowania")
+      setShowAlert(true)
     }
   };
 
@@ -40,6 +47,25 @@ export default function Login() {
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         style={{ color: 'white' }}
+                        InputProps={{
+                          style: { color: 'white', borderColor: 'white' }, 
+                        }}
+                        InputLabelProps={{
+                          style: { color: 'white' }, 
+                        }}
+                        sx={{
+                          '& .MuiOutlinedInput-root': {
+                            '& fieldset': {
+                              borderColor: 'white', 
+                            },
+                            '&:hover fieldset': {
+                              borderColor: 'white', 
+                            },
+                            '&.Mui-focused fieldset': {
+                              borderColor: 'white', 
+                            },
+                          },
+                        }}
                       />
                     </div>
                     <div
@@ -52,22 +78,45 @@ export default function Login() {
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
                           style={{ color: 'white' }}
-                        />
+                          InputProps={{
+                            style: { color: 'white', borderColor: 'white' }, 
+                          }}
+                          InputLabelProps={{
+                            style: { color: 'white' }, 
+                          }}
+                          sx={{
+                            '& .MuiOutlinedInput-root': {
+                              '& fieldset': {
+                                borderColor: 'white', 
+                              },
+                              '&:hover fieldset': {
+                                borderColor: 'white', 
+                              },
+                              '&.Mui-focused fieldset': {
+                                borderColor: 'white', 
+                              },
+                            },
+                          }}
+                          />
                     </div>
                 </div>
                
                 
-                <Button 
+                <Mybutton 
                 style={{
                   position: 'absolute',
                   bottom: '4%',
                   right: '4%'
                 }}
-                variant="outlined" onClick={handleLogin}>Zaloguj się</Button>
-                
-                {error && <p style={{ color: 'red' }}>{error}</p>}
+                onClick={handleLogin}>Zaloguj się</Mybutton>
             </div>
         </div>
+
+        <AlertMessage 
+        showAlert={showAlert} 
+        message={message} 
+        setShowAlert={setShowAlert} 
+      />
       </div>
     );
   }
