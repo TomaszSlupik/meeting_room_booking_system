@@ -1,9 +1,9 @@
-import ErrorToken from "@/app/components/ErrorToken/ErrorToken";
+import ErrorToken from '@/app/components/ErrorToken/ErrorToken';
 
 export default function MainPage() {
-    return (
-      <div>
-        <ErrorToken />
-      </div>
-    );
-  }
+  return (
+    <div>
+      <ErrorToken />
+    </div>
+  );
+}

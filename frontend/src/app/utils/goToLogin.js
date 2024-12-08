@@ -1,4 +1,4 @@
-// Funkcja przekierowująca do logowania użytkownika 
+// Funkcja przekierowująca do logowania użytkownika
 export const goToLogin = () => {
-    window.location.href = '/'
-}
+  window.location.href = '/';
+};

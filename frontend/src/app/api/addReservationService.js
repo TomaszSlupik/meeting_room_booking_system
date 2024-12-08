@@ -1,14 +1,18 @@
-export const editRoomDatabase = async (
-  editRoomId,
-  editReservationDate,
-  editHour,
+export const addRoomDatabase = async (
+  room_id_in_database,
+  reservationDate,
+  reservationTime,
   setMessage,
-  setShowAlert,
-  oldHour,
-  oldReservationDate,
-  roomsRedux
+  setShowAlert
 ) => {
   try {
+    console.log(
+      room_id_in_database,
+      reservationDate,
+      reservationTime,
+      setMessage,
+      setShowAlert
+    );
     const token = localStorage.getItem('token');
     const user_id = localStorage.getItem('user_id');
     const currentDate = new Date();
@@ -18,32 +22,27 @@ export const editRoomDatabase = async (
     const currentMinute = currentDate.getMinutes();
     currentDate.setHours(currentHour, currentMinute);
 
-    // console.log(user_id, editRoomId, oldReservationDate)
-    console.log(roomsRedux);
-
-    const response = await fetch('http://localhost:5000/edit', {
-      method: 'PUT',
+    const response = await fetch('http://localhost:5000/add', {
+      method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         user_id: user_id,
-        room_id: editRoomId,
-        reservation_date: editReservationDate,
-        reservation_time: editHour,
+        room_id: room_id_in_database,
+        reservation_date: reservationDate,
+        reservation_time: reservationTime,
         created_at: currentDate,
-        oldHour: oldHour,
-        oldReservationDate: oldReservationDate,
       }),
     });
 
     if (response.ok) {
-      setMessage('Edycja nastąpiła pomyślnie');
+      setMessage('Twoje rezerwacja przebiegła pomyślnie');
       setShowAlert(true);
     } else {
       const result = await response.json();
-      setMessage(result.message || 'Brak edycji');
+      setMessage(result.message || 'Error');
       setShowAlert(true);
     }
   } catch (error) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import './LoadingDate.css'; 
+import './LoadingDate.css';
 
 const LoadingDate = () => {
   return (
