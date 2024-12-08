@@ -73,6 +73,16 @@
   font-weight: bold;             
 }
 
+.filter_time {
+  margin-bottom: 1em;
+}
+
+.filter_time select {
+  padding: 0.5em;
+  border-radius: 4px;
+  border: 1px solid #00796b;
+  font-size: 14px;
+}
 .table_room {
   width: 95%;
   border-collapse: collapse;

@@ -45,6 +45,7 @@ export default function User() {
   const dispatch = useDispatch();
 
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedTime, setSelectedTime] = useState("");  
   const [filteredData, setFilteredData] = useState([]);
   const [counter, setCounter] = useState(0);
   const roomsRedux = useSelector(state => state.rooms);
@@ -94,20 +95,25 @@ export default function User() {
  
   
   useEffect(() => {
- 
     if (roomsRedux.length > 0) {
       const userId = localStorage.getItem("user_id");
       const filteredRooms = roomsRedux.filter(user => user.id === parseInt(userId));
   
-      const filteredDate = filteredRooms.filter((el) =>
+      // Filtracja po nazwie sali
+      const filteredByRoom = filteredRooms.filter((el) =>
         el.name_room.toLowerCase().includes(searchQuery.toLowerCase())
       );
+  
+      // Filtracja po godzinie
+      const filteredByTime = filteredByRoom.filter((el) =>
+        selectedTime ? el.reservation_time === selectedTime : true
+      );
       
-      setFilteredData(filteredDate);
-      setCounter(filteredDate.length);
+      setFilteredData(filteredByTime);
+      setCounter(filteredByTime.length);
       setCurrentPage(1);
     }
-  }, [roomsRedux, searchQuery]);
+  }, [roomsRedux, searchQuery, selectedTime]);
   
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -346,7 +352,27 @@ export default function User() {
           </div>
         </Mycard>
       
-       
+
+
+        <div className="filter_time">
+            <label htmlFor="time-filter">Wybierz godzinę:</label>
+            <select 
+              id="time-filter"
+              value={selectedTime}
+              onChange={(e) => setSelectedTime(e.target.value)}
+            >
+              <option value="">Wszystkie godziny</option>
+              <option value="08:00">08:00</option>
+              <option value="09:00">09:00</option>
+              <option value="10:00">10:00</option>
+              <option value="11:00">11:00</option>
+              <option value="12:00">12:00</option>
+              <option value="13:00">13:00</option>
+              <option value="14:00">14:00</option>
+              <option value="15:00">15:00</option>
+            </select>
+          </div>
+                
 
         <table className="table_room">
           <caption className="table_header">
