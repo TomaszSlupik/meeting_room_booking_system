@@ -10,6 +10,7 @@ def get_reservation():
  SELECT 
         u.id,
         u.username,
+        u.role,
         ro.name_room,
         ro.description,
         r.reservation_date,   
@@ -31,14 +32,15 @@ def get_reservation():
     for room in rooms:
         result.append({
             "id": room[0],  
-            "username": room[1],  
-            "name_room": room[2],
-            "description": room[3],
-            "reservation_date": room[4],
-            "reservation_time": room[5],
-            "created_at": room[6],
-            "id_room": room[7],
-            "room": room[8]
+            "username": room[1], 
+            "role": room[2], 
+            "name_room": room[3],
+            "description": room[4],
+            "reservation_date": room[5],
+            "reservation_time": room[6],
+            "created_at": room[7],
+            "id_room": room[8],
+            "room": room[9]
         })
 
     cursor.close()
