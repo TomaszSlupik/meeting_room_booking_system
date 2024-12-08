@@ -69,7 +69,7 @@ Backend aplikacji został napisany w **Flask**. Struktura aplikacji jest następ
 - **`/config`**: Folder zawiera plik konfiguracyjny, który umożliwia połączenie z bazą danych, zmienne środowiskowe, hasła oraz localhost.
 - **`/database`**: Zawiera logikę połączenia z bazą danych do PostgreSQL.
 - **`/models`**: W tym folderze znajdują się modele odpowiadające tabelom w bazie danych oraz logika związana z operacjami CRUD (tworzenie, odczyt, aktualizacja, usuwanie) dla tych danych.
-- **`/models`**: Testy dla aplikacji.
+- **`/test`**: Testy dla aplikacji.
 - **`app.py`**: Główny plik aplikacji backendowej. Jest to punkt startowy aplikacji, który uruchamia serwer i obsługuje routing.
 
 ### Frontend
