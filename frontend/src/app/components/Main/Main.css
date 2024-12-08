@@ -1,0 +1,241 @@
+.reserved-day {
+    background-color: gold;  
+    color: red;                
+    font-weight: bold;       
+  }
+
+
+.wrapper {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.wrapper_login {
+  position: absolute;
+  top: 0%;
+  width: 100vw;
+  height: 50px;
+  background: linear-gradient(145deg, #2c2c2c, #1f1f1f); 
+}
+
+.user_btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 0.3em;
+}
+
+.wrapper_box {
+  width: 90%;
+  max-width: 100%; 
+  min-height: 440px;
+  height: auto;
+  background: linear-gradient(145deg, #2c2c2c, #1f1f1f);
+  border-radius: 15px;
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  margin: 0.5em 0em
+}
+
+.header_book {
+  padding: 0.5em;
+  font-size: 1.4em;
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.header_booking-details {
+  margin-bottom: 20px;
+}
+
+.date_choice {
+  margin-bottom: 15px;
+}
+
+.label_choice {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.selected_choice {
+  font-size: 1.2em;
+  color: #a3a3a3;
+}
+
+.additional-info p {
+  margin: 5px 0;
+}
+
+.additional-main {
+  color: gold;
+}
+
+.additional-info a {
+  color: #00bcd4;
+  text-decoration: none;
+}
+
+.additional-info a:hover {
+  text-decoration: underline;
+}
+
+.toggle-view-button {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  margin: 20px auto;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 1.1em;
+}
+
+.toggle-reserve-button {
+  display: block;
+  width: 100%;
+  max-width: 225px;
+  margin: 20px auto;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 1.1em;
+}
+
+.view_week {
+  width: 80%;
+  font-size: 0.8rem;
+}
+
+.view_week-name {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.view_isreserved {
+  font-weight: bold;
+  color: red;
+}
+
+.info_reserve {
+  margin-top: 8em;
+}
+
+
+@media (min-width: 567px) {
+  .header_book {
+      font-size: 1.5em;
+  }
+
+  .selected_choice {
+      font-size: 1.3em;
+  }
+
+  .toggle-view-button {
+      max-width: 250px;
+      font-size: 1.1em;
+  }
+}
+
+@media (min-width: 762px) {
+  .wrapper_box {
+      width: 90%;
+  }
+
+  .header_book {
+      font-size: 1.6em;
+  }
+
+  .selected_choice {
+      font-size: 1.3em;
+  }
+
+  .toggle-view-button {
+      max-width: 220px;
+      font-size: 1.2em;
+  }
+
+
+  .view_week-name {
+    flex-direction: row;
+  }
+
+}
+
+@media (min-width: 992px) {
+  .wrapper_box {
+      width: 80%;
+      padding: 20px;
+  }
+
+  .header_book {
+      font-size: 1.8em;
+  }
+
+  .selected_choice {
+      font-size: 1.4em;
+  }
+
+  .toggle-view-button {
+      max-width: 300px;
+      font-size: 1.2em;
+  }
+
+  .wrapper {
+    flex-direction: row;
+    justify-content: space-around;
+    
+  }
+  .wrapper_box {
+    width: 480px;
+  }
+
+  .view_week-name {
+    flex-direction: column;
+  }
+
+  .info_reserve {
+    margin-top: 0em;
+  }
+}
+
+
+@media (min-width: 1200px) {
+
+  .header_book {
+      font-size: 2em;
+  }
+
+  .selected_choice {
+      font-size: 1.5em;
+  }
+
+  .toggle-view-button {
+      max-width: 350px;
+      font-size: 1.3em;
+  }
+
+  .wrapper_box {
+    width: 570px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .wrapper_box {
+    width: 690px;
+  }
+}
+
+
+@media (min-width: 2100px) {
+  .wrapper_box {
+    width: 900px;
+  }
+}
