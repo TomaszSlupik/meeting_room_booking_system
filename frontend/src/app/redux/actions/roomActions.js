@@ -1,13 +1,13 @@
 import { SET_ROOM, EDIT_ROOM, DELETE_ROOM } from "../consts";
 
-export const setRooms = (room) => {
+
+export const setRooms = (rooms) => {
     return {
         type: SET_ROOM,
-        payload: {
-            room
-        }
+        payload: rooms 
     }
-}
+};
+
 
 export const setEditRooms = (currentName, newName) => {
     return {
